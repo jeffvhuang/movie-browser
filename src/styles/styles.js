@@ -13,7 +13,8 @@ export const styles = StyleSheet.create({
 
   },
   image: {
-    height: 200
+    height: 100,
+    width: 100
   },
   itemText: {
     fontSize: 24

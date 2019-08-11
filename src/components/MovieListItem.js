@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, TouchableHighlight } from "react-native";
 import PropTypes from "prop-types";
 import { styles } from '../styles/styles';
 
@@ -12,15 +12,20 @@ MovieListItem.propTypes = {
 };
 
 export default function MovieListItem({ title, year, poster, id, onPressItem }) {
+  const onPress = () => onPressItem(id);
+  
   return (
-    <View style={styles.listItem}>
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{uri: poster}} />
+    <TouchableHighlight onPress={onPress}>
+      <View style={styles.listItem}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{uri: 'https://facebook.github.io/react-native/img/tiny_logo.png'}} />
+          {/* <Image style={styles.image} source={require('../../assets/splash.png')} /> */}
+        </View>
+        <View>
+          <Text style={styles.itemText}>{title}</Text>
+          <Text style={styles.itemText}>{year}</Text>
+        </View>        
       </View>
-      <View>
-        <Text style={styles.itemText}>{title}</Text>
-        <Text style={styles.itemText}>{year}</Text>
-      </View>
-    </View>
+    </TouchableHighlight>
   );
 }
