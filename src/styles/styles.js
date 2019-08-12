@@ -36,11 +36,12 @@ export const styles = StyleSheet.create({
 
   },
   image: {
-    height: 100,
+    height: 120,
     width: 100
   },
   textContainer: {
-    flex: 1
+    flex: 1,
+    paddingLeft: 10
   },
   itemText: {
     fontSize: 24,

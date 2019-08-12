@@ -18,8 +18,7 @@ export default function MovieListItem({ title, year, poster, id, onPressItem }) 
     <TouchableHighlight onPress={onPress}>
       <View style={styles.listItem}>
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{uri: 'https://facebook.github.io/react-native/img/tiny_logo.png'}} />
-          {/* <Image style={styles.image} source={require('../../assets/splash.png')} /> */}
+          <Image style={styles.image} source={{uri: poster}} />
         </View>
         <View style={styles.textContainer}>
           <Text style={[styles.itemText, styles.movieTitle]}>{title}</Text>
