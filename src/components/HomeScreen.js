@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TextInput, Text, FlatList } from "react-native";
+import { View, TextInput, FlatList } from "react-native";
 import { styles } from "../styles/styles";
 import { data } from "../utils/mockData";
 import { OMDB_API_KEY } from '../utils/helpers';
@@ -21,8 +21,7 @@ export default class HomeScreen extends React.Component {
     try {
       const search = this.state.search.replace(' ', '+').trim();
       const requestUrl = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${search}`;
-      console.log(requestUrl);
-      // const response = await fetch(requestUrl);
+      // const response = await fetch(encodeURI(requestUrl));
       // const result = await response.json();
       // console.log(result);
       this.setState({ data: data.Search });
