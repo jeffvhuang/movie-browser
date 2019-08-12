@@ -40,10 +40,7 @@ export default class HomeScreen extends React.Component {
     />
   );
 
-  onPressItem = id => {
-    // TODO navigate to next stack
-    console.log(id);
-  };
+  onPressItem = id => this.props.navigation.navigate('Movie', { movieId: id });
 
   keyExtractor = (item, index) => item.imdbID;
 
