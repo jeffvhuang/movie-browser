@@ -10,23 +10,27 @@ export const styles = StyleSheet.create({
     justifyContent: "center"
   },
   searchInput: {
-    width: '70%',
+    width: '80%',
     borderWidth: 1,
-    fontSize: 20
+    fontSize: 20,
+    paddingLeft: 10,
+    paddingRight: 10
   },
   button: {
     borderWidth: 1,
     backgroundColor: 'gainsboro',
     padding: 5,
-    // width: '20%'
+    width: '20%'
   },
   buttonText: {
     fontSize: 20,
     textAlign: "center"
   },
   listItem: {
-    height: 200,
-    flexDirection: 'row'
+    height: 120,
+    flexDirection: 'row',
+    borderTopWidth: 1,
+    borderBottomWidth: 1
   },
   imageContainer: {
 
@@ -35,7 +39,20 @@ export const styles = StyleSheet.create({
     height: 100,
     width: 100
   },
+  textContainer: {
+    flex: 1
+  },
   itemText: {
-    fontSize: 24
+    fontSize: 24,
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    width: '100%',
+    textAlign: 'left'
+  },
+  movieTitle: {
+    fontSize: 26
+  },
+  movieYear: {
+    fontSize: 20
   }
 })

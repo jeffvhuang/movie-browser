@@ -22,12 +22,12 @@ export default class HomeScreen extends React.Component {
       const search = this.state.search.replace(' ', '+').trim();
       const requestUrl = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${search}`;
       console.log(requestUrl);
-      const response = await fetch(requestUrl);
-      const result = await response.json();
-      console.log(result);
-      this.setState({ data: result.Search });
+      // const response = await fetch(requestUrl);
+      // const result = await response.json();
+      // console.log(result);
+      this.setState({ data: data.Search });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
