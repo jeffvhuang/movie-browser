@@ -17,10 +17,10 @@ export default function MovieListItem({ title, year, poster, id, onPressItem }) 
   return (
     <TouchableHighlight onPress={onPress}>
       <View style={styles.listItem}>
-        <View style={styles.imageContainer}>
+        <View>
           <Image style={styles.image} source={{uri: poster}} />
         </View>
-        <View style={styles.textContainer}>
+        <View style={styles.movieListTextContainer}>
           <Text style={[styles.itemText, styles.movieTitle]}>{title}</Text>
           <Text style={[styles.itemText, styles.movieYear]}>{year}</Text>
         </View>        

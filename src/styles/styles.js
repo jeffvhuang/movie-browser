@@ -9,6 +9,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: "center"
   },
+  row: {
+    flexDirection: 'row'
+  },
   searchInput: {
     width: '80%',
     borderWidth: 1,
@@ -32,16 +35,20 @@ export const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1
   },
-  imageContainer: {
-
-  },
   image: {
     height: 120,
     width: 100
   },
+  movieListTextContainer: {
+    flex: 1,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
   textContainer: {
     flex: 1,
-    paddingLeft: 10
+    paddingLeft: 10,
+    paddingRight: 10,
+    flexDirection: 'row'
   },
   itemText: {
     fontSize: 24,
@@ -51,9 +58,56 @@ export const styles = StyleSheet.create({
     textAlign: 'left'
   },
   movieTitle: {
-    fontSize: 26
+    fontSize: 26,
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    marginBottom: 10
   },
   movieYear: {
     fontSize: 20
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginRight: 5
+  },
+  text: {
+    fontSize: 16,
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    marginBottom: 10
+  },
+  bold: {
+    fontSize: 16,
+    fontWeight: 'bold'
+  }
+})
+
+export const movieStyles = StyleSheet.create({
+  imageContainer: {
+    marginBottom: 10
+  },
+  image: {
+    width: 160,
+    height: 240
+  },
+  mainInfo: {
+    width: '60%',
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  spaced: {
+    justifyContent: 'space-between'
+  },
+  sectionLabel: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    paddingLeft: 10,
+    marginBottom: 10,
+    marginTop: 10
+  },
+  plotText: {
+    paddingRight: 10,
+    paddingLeft: 10
   }
 })

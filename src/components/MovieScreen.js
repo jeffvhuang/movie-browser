@@ -1,75 +1,84 @@
 import React from "react";
 import { ScrollView, View, Text, Image } from "react-native";
-import { styles } from "../styles/styles";
+import { styles, movieStyles } from "../styles/styles";
 import { movieData } from "../utils/mockData";
-import { OMDB_API_KEY } from '../utils/helpers';
+import { OMDB_API_KEY } from "../utils/helpers";
+import MovieProperty from "./MovieProperty";
 
 export default class MovieScreen extends React.Component {
   state = {
     movie: {},
-    err: ''
+    err: ""
   };
 
   componentDidMount() {
-    const id = this.props.navigation.getParam('movieId', 'no-id-provided');
+    const id = this.props.navigation.getParam("movieId", "no-id-provided");
     this.fetchMovieInfo(id);
   }
 
   fetchMovieInfo = async id => {
     try {
       const requestUrl = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${id}`;
-      const response = await fetch(encodeURI(requestUrl));
-      const result = await response.json();
-      console.log('result for movie', result);
-      this.setState({ movie: result });
+      // const response = await fetch(encodeURI(requestUrl));
+      // const result = await response.json();
+      // console.log('result for movie', result);
+      // this.setState({ movie: result });
+      this.setState({ movie: movieData });
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   render() {
     const { movie } = this.state;
 
-    if (!movie.hasOwnProperty('Title')) return <View></View>
+    if (!movie.hasOwnProperty("Title")) return <View />;
 
     return (
       <ScrollView>
-        <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{uri: movie.Poster}} />
+        <View style={styles.row}>
+          <View style={movieStyles.imageContainer}>
+            <Image style={movieStyles.image} source={{ uri: movie.Poster }} />
+          </View>
+          <View style={movieStyles.mainInfo}>
+            <Text style={styles.movieTitle}>
+              {movie.Title} ({movie.Year} film)
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.label}>Directed By: </Text>
+              {movie.Director}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.label}>Starring: </Text>
+              {movie.Actors}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.label}>Rated: </Text>
+              {movie.Rated}
+            </Text>
+          </View>
         </View>
-        <View style={styles.textContainer}>
-          <Text>{movie.Title}</Text>
-          <Text>{movie.Year}</Text>
-          <Text>{movie.Rated}</Text>
-          <Text>{movie.Released}</Text>
-          <Text>{movie.Runtime}</Text>
-          <Text>{movie.Genre}</Text>
-          <Text>{movie.Director}</Text>
-          <Text>{movie.Writer}</Text>
-          <Text>{movie.Actors}</Text>
-          <Text>{movie.Language}</Text>
-          <Text>{movie.Country}</Text>
-          <Text>{movie.Awards}</Text>
+        <MovieProperty label="Released" value={movie.Released} />
+        <MovieProperty label="Runtime" value={movie.Runtime} />
+        <MovieProperty label="Genre" value={movie.Genre} />
+        <MovieProperty label="Languages" value={movie.Language} />
+        <MovieProperty label="Country" value={movie.Country} />
+        <MovieProperty label="Awards" value={movie.Awards} />
+        <MovieProperty label="BoxOffice" value={movie.BoxOffice} />
+        <View style={styles.plot}>
+          <Text style={movieStyles.sectionLabel}>Plot</Text>
+          <Text style={[styles.text, movieStyles.plotText]}>{movie.Plot}</Text>
         </View>
         <View>
-          <Text>{movie.Plot}</Text>
-        </View>
-        <View>
+          <Text style={movieStyles.sectionLabel}>Ratings</Text>
           {movie.Ratings.map((rating, index) => {
             return (
-              <View key={movie.imdbID + '-' + index}>
-                <Text>{rating.Source}</Text>
-                <Text>{rating.Value}</Text>
-              </View>
+              <MovieProperty key={movie.imdbID + "-" + index} label={rating.Source} value={rating.Value} />
             );
           })}
         </View>
-        <View style={styles.textContainer}>
-          <Text>{movie.Metascore}</Text>
-          <Text>{movie.imdbRating}</Text>
-          <Text>{movie.imdbVotes}</Text>
-          <Text>{movie.BoxOffice}</Text>
-        </View>
+        <MovieProperty label="IMDb Rating" value={movie.imdbRating} />
+        <MovieProperty label="IMDb Votes" value={movie.imdbVotes} />
       </ScrollView>
     );
   }
