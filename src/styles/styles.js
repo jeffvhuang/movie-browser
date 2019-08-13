@@ -80,6 +80,18 @@ export const styles = StyleSheet.create({
   bold: {
     fontSize: 16,
     fontWeight: 'bold'
+  },
+  errorView: {
+    flex: 1,
+    justifyContent: 'center'    
+  },
+  centerText: {
+    textAlign: 'center',
+    fontSize: 24,
+    paddingLeft: 10,
+    paddingRight: 10,
+    flexWrap: 'wrap',
+    flexDirection: 'column',
   }
 })
 

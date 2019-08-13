@@ -4,11 +4,12 @@ import { styles, movieStyles } from "../styles/styles";
 import { movieData } from "../utils/mockData";
 import { OMDB_API_KEY } from "../utils/helpers";
 import MovieProperty from "./MovieProperty";
+import ErrorView from './ErrorView';
 
 export default class MovieScreen extends React.Component {
   state = {
     movie: {},
-    err: ""
+    error: ""
   };
 
   componentDidMount() {
@@ -19,19 +20,20 @@ export default class MovieScreen extends React.Component {
   fetchMovieInfo = async id => {
     try {
       const requestUrl = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${id}`;
-      // const response = await fetch(encodeURI(requestUrl));
-      // const result = await response.json();
-      // console.log('result for movie', result);
-      // this.setState({ movie: result });
-      this.setState({ movie: movieData });
-    } catch (err) {
-      console.error(err);
+      const response = await fetch(encodeURI(requestUrl));
+      const result = await response.json();
+      console.log("result for movie", result);
+      if (result.Error) throw new Error(result.Error);
+      this.setState({ movie: result });
+    } catch (error) {
+      this.setState({ error: "Oops, something went wrong!" });
     }
   };
 
   render() {
     const { movie } = this.state;
 
+    if (this.state.error) return <ErrorView text={this.state.error} />
     if (!movie.hasOwnProperty("Title")) return <View />;
 
     return (
@@ -73,7 +75,11 @@ export default class MovieScreen extends React.Component {
           <Text style={movieStyles.sectionLabel}>Ratings</Text>
           {movie.Ratings.map((rating, index) => {
             return (
-              <MovieProperty key={movie.imdbID + "-" + index} label={rating.Source} value={rating.Value} />
+              <MovieProperty
+                key={movie.imdbID + "-" + index}
+                label={rating.Source}
+                value={rating.Value}
+              />
             );
           })}
         </View>
