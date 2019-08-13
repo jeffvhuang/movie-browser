@@ -31,9 +31,9 @@ export default class MovieScreen extends React.Component {
   };
 
   render() {
-    const { movie } = this.state;
+    const { movie, error } = this.state;
 
-    if (this.state.error) return <ErrorView text={this.state.error} />
+    if (error) return <ErrorView text={error} />
     if (!movie.hasOwnProperty("Title")) return <View />;
 
     return (

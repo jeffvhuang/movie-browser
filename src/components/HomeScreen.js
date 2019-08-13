@@ -5,12 +5,13 @@ import { data } from "../utils/mockData";
 import { OMDB_API_KEY } from '../utils/helpers';
 import MovieListItem from "./MovieListItem";
 import Btn from './Btn';
+import ErrorView from './ErrorView';
 
 export default class HomeScreen extends React.Component {
   state = {
     search: "",
     data: [],
-    err: ''
+    error: ''
   };
 
   onChange = value => {
@@ -24,9 +25,10 @@ export default class HomeScreen extends React.Component {
       // const response = await fetch(encodeURI(requestUrl));
       // const result = await response.json();
       // console.log(result);
+      // if (result.Error) throw new Error(result.Error);
       this.setState({ data: data.Search });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      this.setState({ error: "Oops, something went wrong!" });
     }
   }
 
@@ -45,6 +47,8 @@ export default class HomeScreen extends React.Component {
   keyExtractor = (item, index) => item.imdbID;
 
   render() {
+    if (this.state.error) return <ErrorView text={this.state.error} />
+
     return (
       <View style={styles.container}>
         <View style={styles.search}>
