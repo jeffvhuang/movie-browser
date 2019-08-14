@@ -8,6 +8,10 @@ import Btn from './Btn';
 import ErrorView from './ErrorView';
 
 export default class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Movie Search List',
+  };
+
   state = {
     search: "",
     data: [],
@@ -42,7 +46,7 @@ export default class HomeScreen extends React.Component {
     />
   );
 
-  onPressItem = id => this.props.navigation.navigate('Movie', { movieId: id });
+  onPressItem = id => this.props.navigation.navigate('Movie', { id });
 
   keyExtractor = (item, index) => item.imdbID;
 

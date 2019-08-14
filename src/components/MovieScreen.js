@@ -7,13 +7,18 @@ import MovieProperty from "./MovieProperty";
 import ErrorView from './ErrorView';
 
 export default class MovieScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Movie Details'
+  };
+
   state = {
     movie: {},
     error: ""
   };
 
   componentDidMount() {
-    const id = this.props.navigation.getParam("movieId", "no-id-provided");
+    const id = this.props.navigation.getParam("id", "no-id-provided");
+    console.log(id);
     this.fetchMovieInfo(id);
   }
 
@@ -65,7 +70,7 @@ export default class MovieScreen extends React.Component {
         <MovieProperty label="Genre" value={movie.Genre} />
         <MovieProperty label="Languages" value={movie.Language} />
         <MovieProperty label="Country" value={movie.Country} />
-        <MovieProperty label="Awards" value={movie.Awards} />
+        {(movie.Awards != 'N/A') && <MovieProperty label="Awards" value={movie.Awards} />}
         <MovieProperty label="BoxOffice" value={movie.BoxOffice} />
         <View style={styles.plot}>
           <Text style={movieStyles.sectionLabel}>Plot</Text>

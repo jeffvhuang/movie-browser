@@ -8,7 +8,17 @@ const AppNavigator = createStackNavigator(
     Movie: MovieScreen
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Home",
+    headerLayoutPreset: 'center',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'steelblue'
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold'
+      },
+    },
   }
 );
 
