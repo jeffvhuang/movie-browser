@@ -2,7 +2,7 @@ import React from "react";
 import { View, TextInput, FlatList } from "react-native";
 import { styles } from "../styles/styles";
 import { data } from "../utils/mockData";
-import { OMDB_API_KEY } from '../utils/helpers';
+import { fetchMovies } from '../utils/helpers';
 import MovieListItem from "./MovieListItem";
 import Btn from './Btn';
 import ErrorView from './ErrorView';
@@ -22,13 +22,10 @@ export default class HomeScreen extends React.Component {
     this.setState({ search: value });
   };
 
-  onPressBtn = async () => {
+  getMovies = async () => {
     try {
       const search = this.state.search.replace(' ', '+').trim();
-      const requestUrl = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${search}`;
-      const response = await fetch(encodeURI(requestUrl));
-      const result = await response.json();
-      if (result.Error) throw new Error(result.Error);
+      const result = await fetchMovies(search);
       this.setState({ data: result.Search });
     } catch (error) {
       this.setState({ error: "Oops, something went wrong!" });
@@ -56,7 +53,7 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         <View style={styles.search}>
           <TextInput onChangeText={this.onChange} value={this.state.search} style={styles.searchInput} />
-          <Btn onPress={this.onPressBtn} title='search' />
+          <Btn onPress={this.getMovies} title='search' />
         </View>
         <FlatList
           data={this.state.data}

@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, View, Text, Image, Platform } from "react-native";
 import { styles, movieStyles } from "../styles/styles";
 import { movieData } from "../utils/mockData";
-import { OMDB_API_KEY } from "../utils/helpers";
+import { fetchMovieInfo } from "../utils/helpers";
 import MovieProperty from "./MovieProperty";
 import ErrorView from "./ErrorView";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -32,15 +32,12 @@ export default class MovieScreen extends React.Component {
 
   componentDidMount() {
     const id = this.props.navigation.getParam("id", "no-id-provided");
-    this.fetchMovieInfo(id);
+    this.getMovieInfo(id);
   }
 
-  fetchMovieInfo = async id => {
+  getMovieInfo = async id => {
     try {
-      const requestUrl = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${id}`;
-      const response = await fetch(encodeURI(requestUrl));
-      const result = await response.json();
-      if (result.Error) throw new Error(result.Error);
+      const result = await fetchMovieInfo(id);
       this.setState({ movie: result });
     } catch (error) {
       this.setState({ error: "Oops, something went wrong!" });
