@@ -1,7 +1,8 @@
 import React from "react";
-import { Text, View, Image, TouchableHighlight } from "react-native";
+import { Text, View, Image, TouchableHighlight, Platform  } from "react-native";
 import PropTypes from "prop-types";
 import { styles } from '../styles/styles';
+import Icon from "react-native-vector-icons/Ionicons";
 
 MovieListItem.propTypes = {
   title: PropTypes.string.isRequired,
@@ -13,7 +14,7 @@ MovieListItem.propTypes = {
 
 export default function MovieListItem({ title, year, poster, id, onPressItem }) {
   const onPress = () => onPressItem(id);
-  
+  const icon = Platform.OS === "ios" ? "ios-arrow-forward" : "md-arrow-dropright";
   return (
     <TouchableHighlight onPress={onPress}>
       <View style={styles.listItem}>
@@ -23,7 +24,10 @@ export default function MovieListItem({ title, year, poster, id, onPressItem }) 
         <View style={styles.movieListTextContainer}>
           <Text style={[styles.itemText, styles.movieTitle]}>{title}</Text>
           <Text style={[styles.itemText, styles.movieYear]}>{year}</Text>
-        </View>        
+        </View>
+        <View style={styles.listArrow}>
+          <Icon name={icon} size={40} color="black" />  
+        </View>       
       </View>
     </TouchableHighlight>
   );

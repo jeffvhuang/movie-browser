@@ -1,14 +1,28 @@
 import React from "react";
-import { ScrollView, View, Text, Image } from "react-native";
+import { ScrollView, View, Text, Image, Platform } from "react-native";
 import { styles, movieStyles } from "../styles/styles";
 import { movieData } from "../utils/mockData";
 import { OMDB_API_KEY } from "../utils/helpers";
 import MovieProperty from "./MovieProperty";
-import ErrorView from './ErrorView';
+import ErrorView from "./ErrorView";
+import Icon from "react-native-vector-icons/Ionicons";
+
+const icon = Platform.OS === "ios" ? "ios-search" : "md-search";
 
 export default class MovieScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Movie Details'
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "Movie Details",
+      headerRight: (
+        <Icon.Button
+          name={icon}
+          size={28}
+          color="white"
+          backgroundColor="steelblue"
+          onPress={() => navigation.navigate("Home")}
+        />
+      )      
+    }
   };
 
   state = {
@@ -18,7 +32,6 @@ export default class MovieScreen extends React.Component {
 
   componentDidMount() {
     const id = this.props.navigation.getParam("id", "no-id-provided");
-    console.log(id);
     this.fetchMovieInfo(id);
   }
 
@@ -27,7 +40,6 @@ export default class MovieScreen extends React.Component {
       const requestUrl = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${id}`;
       const response = await fetch(encodeURI(requestUrl));
       const result = await response.json();
-      console.log("result for movie", result);
       if (result.Error) throw new Error(result.Error);
       this.setState({ movie: result });
     } catch (error) {
@@ -38,7 +50,7 @@ export default class MovieScreen extends React.Component {
   render() {
     const { movie, error } = this.state;
 
-    if (error) return <ErrorView text={error} />
+    if (error) return <ErrorView text={error} />;
     if (!movie.hasOwnProperty("Title")) return <View />;
 
     return (
@@ -70,7 +82,9 @@ export default class MovieScreen extends React.Component {
         <MovieProperty label="Genre" value={movie.Genre} />
         <MovieProperty label="Languages" value={movie.Language} />
         <MovieProperty label="Country" value={movie.Country} />
-        {(movie.Awards != 'N/A') && <MovieProperty label="Awards" value={movie.Awards} />}
+        {movie.Awards != "N/A" && (
+          <MovieProperty label="Awards" value={movie.Awards} />
+        )}
         <MovieProperty label="BoxOffice" value={movie.BoxOffice} />
         <View style={styles.plot}>
           <Text style={movieStyles.sectionLabel}>Plot</Text>

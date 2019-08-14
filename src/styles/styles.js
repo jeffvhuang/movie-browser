@@ -66,6 +66,10 @@ export const styles = StyleSheet.create({
   movieYear: {
     fontSize: 20
   },
+  listArrow: {
+    justifyContent: 'center',
+    marginRight: 15
+  },
   label: {
     fontSize: 16,
     fontWeight: 'bold',
