@@ -1,8 +1,9 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator, createSwitchNavigator } from "react-navigation";
 import HomeScreen from "../components/HomeScreen";
 import MovieScreen from "../components/MovieScreen";
+import ErrorScreen from "../components/ErrorScreen";
 
-const AppNavigator = createStackNavigator(
+const AppStack = createStackNavigator(
   {
     Home: HomeScreen,
     Movie: MovieScreen
@@ -19,6 +20,18 @@ const AppNavigator = createStackNavigator(
         fontWeight: 'bold'
       },
     },
+  }
+);
+
+const ErrorStack = createStackNavigator({ ErrorView: ErrorScreen });
+
+const AppNavigator = createSwitchNavigator(
+  {
+    App: AppStack,
+    Error: ErrorStack,
+  },
+  {
+    initialRouteName: 'App',
   }
 );
 

@@ -5,7 +5,6 @@ import { data } from "../utils/mockData";
 import { fetchMovies } from '../utils/helpers';
 import MovieListItem from "./MovieListItem";
 import Btn from './Btn';
-import ErrorView from './ErrorView';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -14,8 +13,7 @@ export default class HomeScreen extends React.Component {
 
   state = {
     search: "",
-    data: [],
-    error: ''
+    data: []
   };
 
   onChange = value => {
@@ -28,7 +26,7 @@ export default class HomeScreen extends React.Component {
       const result = await fetchMovies(search);
       this.setState({ data: result.Search });
     } catch (error) {
-      this.setState({ error: "Oops, something went wrong!" });
+      this.props.navigation.navigate('ErrorView', { error: "Oops, something went wrong!" });
     }
   }
 
@@ -47,8 +45,6 @@ export default class HomeScreen extends React.Component {
   keyExtractor = (item, index) => item.imdbID;
 
   render() {
-    if (this.state.error) return <ErrorView text={this.state.error} />
-
     return (
       <View style={styles.container}>
         <View style={styles.search}>

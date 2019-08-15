@@ -4,7 +4,6 @@ import { styles, movieStyles } from "../styles/styles";
 import { movieData } from "../utils/mockData";
 import { fetchMovieInfo } from "../utils/helpers";
 import MovieProperty from "./MovieProperty";
-import ErrorView from "./ErrorView";
 import Icon from "react-native-vector-icons/Ionicons";
 
 const icon = Platform.OS === "ios" ? "ios-search" : "md-search";
@@ -26,8 +25,7 @@ export default class MovieScreen extends React.Component {
   };
 
   state = {
-    movie: {},
-    error: ""
+    movie: {}
   };
 
   componentDidMount() {
@@ -40,14 +38,13 @@ export default class MovieScreen extends React.Component {
       const result = await fetchMovieInfo(id);
       this.setState({ movie: result });
     } catch (error) {
-      this.setState({ error: "Oops, something went wrong!" });
+      this.props.navigation.navigate('ErrorView', { error: "Oops, something went wrong!" });
     }
   };
 
   render() {
-    const { movie, error } = this.state;
+    const { movie } = this.state;
 
-    if (error) return <ErrorView text={error} />;
     if (!movie.hasOwnProperty("Title")) return <View />;
 
     return (
